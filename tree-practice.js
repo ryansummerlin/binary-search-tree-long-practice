@@ -176,7 +176,38 @@ function countNodes (rootNode) {
 }
 
 function getParentNode (rootNode, target) {
-  // Your code here
+  if (rootNode.val === target) {
+    return null;
+  }
+
+  const depthFirstTraversal = function() {
+    let stack = [rootNode];
+    let currentNode;
+
+    while (stack.length > 0) {
+      currentNode = stack[0];
+      stack.shift();
+
+      if (currentNode.left !== null) {
+        if (currentNode.left.val === target) {
+          return currentNode;
+        }
+        stack.unshift(currentNode.left);
+      }
+
+      if (currentNode.right !== null) {
+        if (currentNode.right.val === target) {
+          return currentNode;
+        }
+        stack.unshift(currentNode.right);
+      }
+
+    }
+}
+
+return depthFirstTraversal();
+
+
 }
 
 function inOrderPredecessor (rootNode, target) {
