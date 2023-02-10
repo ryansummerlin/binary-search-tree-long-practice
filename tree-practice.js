@@ -211,21 +211,62 @@ return depthFirstTraversal();
 }
 
 function inOrderPredecessor (rootNode, target) {
-  // Your code here
+  let vals = [];
+  let predecessor = null;
+  const inOrderTraversal = function(currentNode = this.root) {
+    if (currentNode.left !== null) {
+      inOrderTraversal(currentNode.left);
+    }
+
+    if (currentNode.val === target) {
+      if (vals.length !== 0) {
+        predecessor = vals[vals.length - 1];
+      }
+    }
+    vals.push(currentNode.val);
+
+    if (currentNode.right !== null) {
+      inOrderTraversal(currentNode.right);
+    }
+  }
+
+  inOrderTraversal(rootNode);
+  return predecessor;
 }
 
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
+  let parent = getParentNode(rootNode, target);
+  let child;
 
   // Undefined if the target cannot be found
+  if (!parent) {
+    return undefined;
+  }
 
   // Set target based on parent
+  if (parent.left && parent.left.val === target) {
+    child = parent.left;
+  } else if (parent.right && parent.right.val === target) {
+    child = parent.right;
+  }
 
   // Case 0: Zero children and no parent:
   //   return null
+  if (!parent && !child.left && !child.right) {
+    return null;
+  }
 
   // Case 1: Zero children:
   //   Set the parent that points to it to null
+  if (!child.left && !child.right) {
+    if (parent.left === child) {
+      parent.left = null;
+    } else if (parent.right === child) {
+      parent.right = null;
+    }
+    return;
+  }
 
   // Case 2: Two children:
   //  Set the value to its in-order predecessor, then delete the predecessor
@@ -235,6 +276,7 @@ function deleteNodeBST(rootNode, target) {
 
   // Case 3: One child:
   //   Make the parent point to the child
+
 
 }
 
