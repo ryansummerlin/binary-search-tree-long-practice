@@ -270,12 +270,30 @@ function deleteNodeBST(rootNode, target) {
 
   // Case 2: Two children:
   //  Set the value to its in-order predecessor, then delete the predecessor
+  let predecessor = inOrderPredecessor(rootNode, target);
   //  Replace target node with the left most child on its right side,
   //  or the right most child on its left side.
+  let temp = child.right;
+  while (temp.left !== null) {
+    temp = temp.left;
+  }
   //  Then delete the child that it was replaced with.
 
   // Case 3: One child:
   //   Make the parent point to the child
+  if (child.left) {
+    if (parent.left === child) {
+      parent.left = child.left;
+    } else if (parent.right === child) {
+      parent.right = child.left;
+    }
+  } else if (child.right) {
+    if (parent.left === child) {
+      parent.left = child.right;
+    } else if (parent.right) {
+      parent.right = child.right;
+    }
+  }
 
 
 }
